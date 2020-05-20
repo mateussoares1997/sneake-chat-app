@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
+import { animateScroll } from "react-scroll";
 import io from 'socket.io-client'
 
 let socket
@@ -57,6 +58,10 @@ const Chat = (props) => {
             newMessage
         ])
     }, [newMessage]);
+
+    useEffect(() => {
+        animateScroll.scrollToBottom();
+    });
     
     const handleChange = (event) => {
         const value  = event.target.value
@@ -76,7 +81,7 @@ const Chat = (props) => {
 
     return (
         <div className="chat">
-            <ul className="chat-list"> 
+            <ul className="chat-list" id='chat-list'> 
                 {
                     messages && messages.map((message, index ) => {
                         const  whose = message.who === userName ? 'mine' : 'yours'
