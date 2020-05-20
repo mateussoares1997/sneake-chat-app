@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom';
 import io from 'socket.io-client'
 
 let socket
@@ -8,8 +9,14 @@ const Chat = (props) => {
     const { userName, setUserName } = props
     const [ messages, setMessages ] = useState([])
     const [ text, setText ] = useState('')
+    const history = useHistory()
 
     useEffect(() => {
+
+        if(!userName){
+            history.push('/');
+            return
+        }
 
         socket = io(process.env.REACT_APP_CHAT_SERVER)
 
@@ -38,7 +45,7 @@ const Chat = (props) => {
 
         });
 
-    }, [userName])
+    }, [history, userName])
 
     const handleChange = (event) => {
         const value  = event.target.value
