@@ -19,14 +19,54 @@ code {
 
 .chat-list{
   width: 100%;
-  height: calc(100vh - 100px);
+  height: 100vh;
   background-color: beige;
   padding: 0;
   margin: 0;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding-bottom: 100px;
 } 
 
 .chat-field{
   border: none;
   height: 100px;
   width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 } 
+
+li.message{
+  width: 100%;
+  margin: 20px 0;
+}
+
+.message-bubble{
+  width: 70%;
+  padding: 10px;
+  max-width: 300px;
+  border-radius: 10px;
+}
+
+.message-bubble.mine{
+  margin-left: auto;
+  margin-right: 10px;
+  background-color: cadetblue;
+}
+
+.message-bubble.yours{
+  margin-left: 10px;
+  margin-right: auto;
+  background-color: chartreuse;
+}
+
+.whose{
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 12px;
+
+}

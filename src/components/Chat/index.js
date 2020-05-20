@@ -6,8 +6,9 @@ let socket
 
 const Chat = (props) => {
 
-    const { userName, setUserName } = props
+    const { userName } = props
     const [ messages, setMessages ] = useState([])
+    const [ newMessage, setNewMessage ] = useState()
     const [ text, setText ] = useState('')
     const history = useHistory()
 
@@ -28,7 +29,6 @@ const Chat = (props) => {
         });
 
         socket.on('joined',(data) => {
-
             if(!data.includes(userName)){
                 alert(data)
             }else{
@@ -38,15 +38,26 @@ const Chat = (props) => {
         });
        
         socket.on('messaged',(data) => {
-
-            if(data.who !== userName){
-                alert(data.text)
+            const message = {
+                who: data.who,
+                text: data.text
             }
-
+            setNewMessage(message)
         });
 
-    }, [history, userName])
+    }, [])
 
+    useEffect(() => {
+        if(!newMessage){
+            return
+        }
+
+        setMessages([
+            ...messages,
+            newMessage
+        ])
+    }, [newMessage]);
+    
     const handleChange = (event) => {
         const value  = event.target.value
         setText(value)
@@ -62,11 +73,23 @@ const Chat = (props) => {
             setText('')
         }
     }
-    
+
     return (
         <div className="chat">
             <ul className="chat-list"> 
-                
+                {
+                    messages && messages.map((message, index ) => {
+                        const  whose = message.who === userName ? 'mine' : 'yours'
+                        return (
+                            <li className='message' key={index}>
+                                <div className={'message-bubble ' + whose}>
+                                    <span className='whose'>{message.who}</span>
+                                    {message.text}
+                                </div>
+                            </li>
+                        )
+                    })
+                }
             </ul>
             <textarea onChange={handleChange} className="chat-field" value={text} onKeyPress={handleKeyPress}></textarea>
         </div>
