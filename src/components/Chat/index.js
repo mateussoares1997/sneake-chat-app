@@ -96,7 +96,7 @@ const Chat = (props) => {
                     })
                 }
             </ul>
-            <textarea onChange={handleChange} className="chat-field" value={text} onKeyPress={handleKeyPress}></textarea>
+            <textarea placeholder="Write your message" onChange={handleChange} className="chat-field" value={text} onKeyPress={handleKeyPress}></textarea>
         </div>
     );
 }
