@@ -1,5 +1,10 @@
-body {
+*{  
+  padding: 0;
   margin: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -11,3 +16,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.chat-list{
+  width: 100%;
+  height: calc(100vh - 100px);
+  background-color: beige;
+  padding: 0;
+  margin: 0;
+} 
+
+.chat-field{
+  border: none;
+  height: 100px;
+  width: 100%;
+} 
