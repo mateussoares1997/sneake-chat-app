@@ -71,11 +71,18 @@ const Chat = (props) => {
     
     const handleChange = (event) => {
         let value  = event.target.value
-        setText(value)
+
+        //Clean new lines when there's no text
+        const clean = value.replace(/^\s*(\n)\s*$/, '')
+        setText(clean)
     }
     
     const handleKeyPress = (event) => {
         if(event.key !== 'Enter'){
+            return
+        }
+
+        if(event.shiftKey){
             return
         }
 
@@ -97,13 +104,26 @@ const Chat = (props) => {
             <ul className="chat-list" id='chat-list'> 
                 {
                     messages && messages.map((message, index ) => {
-                        const  whose = message.who === userName ? 'mine' : 'yours'
-                        const  who = message.who === userName ? 'You' : message.who
+                        const whose = message.who === userName ? 'mine' : 'yours'
+                        const who = message.who === userName ? 'You' : message.who
+                        const textArray = message.text.split('\n')
+                        const textArrayLen = textArray.length
                         return (
                             <li className='message' key={index}>
                                 <div className={'message-bubble ' + whose}>
                                     <span className='whose'>- {who}</span>
-                                    {message.text}
+                                    {
+                                        textArray.map((item, index) => (
+                                            <p>
+                                                { item }
+                                                {
+                                                    index + 1 !== textArrayLen && (
+                                                        <br />
+                                                    )
+                                                }
+                                            </p>
+                                        ))
+                                    }
                                 </div>
                             </li>
                         )
@@ -115,7 +135,8 @@ const Chat = (props) => {
                 onChange={handleChange} 
                 className="chat-field" 
                 value={text} 
-                onKeyPress={handleKeyPress}>
+                onKeyPress={handleKeyPress}
+                autoFocus>
             </textarea>
         </div>
     );

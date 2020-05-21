@@ -20,7 +20,7 @@ const Welcome = (props) => {
   return (
     <div className="welcome">
       <label>
-        Hello, <input onKeyPress={handleKeyPress} onChange={handleChange} value={userName}/>
+        Hello, <input onKeyPress={handleKeyPress} onChange={handleChange} value={userName} autoFocus/>
       </label>
     </div>
   );
