@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom';
-import { animateScroll } from "react-scroll";
+import { useHistory } from 'react-router-dom'
+import { animateScroll } from "react-scroll"
 import io from 'socket.io-client'
 
 let socket
@@ -16,7 +16,7 @@ const Chat = (props) => {
     useEffect(() => {
 
         if(!userName){
-            history.push('/');
+            history.push('/')
             return
         }
 
@@ -26,16 +26,22 @@ const Chat = (props) => {
             socket.emit('join', {
                 room: 'room',
                 who: userName
-            });
-        });
+            })
+        })
 
         socket.on('joined',(data) => {
+            let text = 'You are connected with the room'
+
             if(!data.includes(userName)){
-                alert(data)
-            }else{
-                alert('You entered')
+                text = data
             }
 
+            const message = {
+                who: 'Sneake Chat',
+                text
+            }
+
+            setNewMessage(message)
         });
        
         socket.on('messaged',(data) => {
@@ -64,19 +70,26 @@ const Chat = (props) => {
     });
     
     const handleChange = (event) => {
-        const value  = event.target.value
+        let value  = event.target.value
         setText(value)
     }
     
     const handleKeyPress = (event) => {
-        if(event.key === 'Enter'){
-            socket.emit('message', {
-                who: userName,
-                text: text,
-                room: 'room'
-            });
-            setText('')
+        if(event.key !== 'Enter'){
+            return
         }
+
+        if(!text.length > 0){
+            return 
+        }
+
+        socket.emit('message', {
+            who: userName,
+            text: text,
+            room: 'room'
+        });
+
+        setText('')
     }
 
     return (
@@ -85,10 +98,11 @@ const Chat = (props) => {
                 {
                     messages && messages.map((message, index ) => {
                         const  whose = message.who === userName ? 'mine' : 'yours'
+                        const  who = message.who === userName ? 'You' : message.who
                         return (
                             <li className='message' key={index}>
                                 <div className={'message-bubble ' + whose}>
-                                    <span className='whose'>{message.who}</span>
+                                    <span className='whose'>- {who}</span>
                                     {message.text}
                                 </div>
                             </li>
@@ -96,7 +110,13 @@ const Chat = (props) => {
                     })
                 }
             </ul>
-            <textarea placeholder="Write your message" onChange={handleChange} className="chat-field" value={text} onKeyPress={handleKeyPress}></textarea>
+            <textarea 
+                placeholder="Type a message..." 
+                onChange={handleChange} 
+                className="chat-field" 
+                value={text} 
+                onKeyPress={handleKeyPress}>
+            </textarea>
         </div>
     );
 }
