@@ -26,4 +26,4 @@ To start without docker: yarn/npm start
  A list of required environment variables that you need to set in the .env file:
 | Name | Value |
 |--|--|
-| REACT_APP_CHAT_SERVER | The URL and port of the [backend application](https://github.com/iammateus/sneake-chat) Ex:. http://localhost:5000 |
+| REACT_APP_CHAT_SERVER | The URL and port of the [back end application](https://github.com/iammateus/sneake-chat) Ex:. http://localhost:5000 |
