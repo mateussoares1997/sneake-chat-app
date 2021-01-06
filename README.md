@@ -27,3 +27,6 @@ To start without docker: yarn/npm start
 | Name | Value |
 |--|--|
 | REACT_APP_CHAT_SERVER | The URL and port of the [back end application](https://github.com/iammateus/sneake-chat) Ex:. http://localhost:5000 |
+
+## License
+[MIT](https://github.com/iammateus/sneake-chat-app/blob/master/LICENSE)
